@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <script src="/media/js/prototype.js" type="text/javascript"></script>
+    <script src="/media/js/scriptaculous.js" type="text/javascript"></script>
+    <script src="/media/js/application.js" type="text/javascript"></script>
+    
+	<script src="/media/js/jsi18n.js" type="text/javascript"></script>
+	<script src="/media/js/core.js"></script>
+	<script src="/media/js/dateparse.js"></script>
+	<script src="/media/js/timeparse.js"></script>
+	<script src="/media/js/calendar.js"></script>
+	<script src="/media/js/admin/DateTimeShortcuts.js" type="text/javascript"></script>
+	
+	<link rel="stylesheet" type="text/css" href="/media/css/base.css" />
+	<link rel="stylesheet" type="text/css" href="/media/css/forms.css" />
+	<link rel="stylesheet" type="text/css" href="/media/css/widgets.css" />
+
+	{% block stylesheet %}{% endblock %}
+	{% block javascript %}{% endblock %}
+	<script>
+		Ajax.Responders.register({ 
+			onCreate : displayLoading, 
+			onComplete : hideLoading
+		});
+		function displayLoading(){
+			Element.show("loading");
+		}
+
+		function hideLoading (){
+			Element.hide("loading");
+		}
+	</script>
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
+</html>
