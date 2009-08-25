@@ -12,8 +12,9 @@ hosts = []
 
 for hostname in reports_dict.keys():
 	yamlfiles = reports_dict[hostname]
-	hosts.append(puppetHost(hostname, yamlfiles, REPORTDIR))
+	hosts.append(puppetHost(hostname, yamlfiles))
 	
 puppet_host = hosts[0]
 
-print puppet_host.reportdir
+puppet_host.loadFacts()
+
