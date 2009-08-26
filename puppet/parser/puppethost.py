@@ -14,10 +14,14 @@ class puppetHost:
 		#return 'Hostname: %s\nyamlfiles: %s' % (self.hostname, self.yamlfiles)
 		
 	def loadFacts(self):
+		self.facts = {}
 		yamlfile = YAMLDIR + "/facts/" + self.hostname + ".yaml"
 		if os.path.exists(yamlfile):
-			self.facts = yaml.load(yamlfile)
-			print self.facts
+			file = open(yamlfile, 'r')
+			c = file.read()
+			c = c.replace('--- !ruby/object:Puppet::Node::Facts','')
+			self.facts = yaml.load(c)
 		else:
-			print 'File %s does not exists' % yamlfile			
-
+			raise 'File %s does not exists' % yamlfile			
+		
+		return self.facts

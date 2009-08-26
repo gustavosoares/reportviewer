@@ -16,5 +16,6 @@ for hostname in reports_dict.keys():
 	
 puppet_host = hosts[0]
 
-puppet_host.loadFacts()
-
+facts = puppet_host.loadFacts()
+print '*' * 60
+print 'facts: %s\n' % facts
