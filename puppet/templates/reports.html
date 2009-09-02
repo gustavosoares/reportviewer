@@ -4,13 +4,54 @@
 
 
 {% block content %}
-    <!-- Insert your content here -->
-	<table>
-		<tr>
-				<td><b>Hostname</b></td>
-				<td><b>Total reports</b></td>
-				<td><b>Actions</b></td>
-		<tr>
+	 
+<center>
+<table>
+	<tr><td colspan=3><font size=+2 align="center">Choose a host to view reports for</font></td></tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr><td><b>Hostname</b></td><td><b>Total Reports</b></td><td><b>Actions</b></td></tr>
+	{% for host in hosts %}
+		<tr bgcolor="#eeeeee">
+	        	<td>{{ host.name }}</td>
+
+	        	<td><center>{{ host.total_reports }}</center></td>
+	        	<td><center>
+	                	<a href="viewfacts.php?host=riovld46.globoi.com">facts</a>
+	                	<a href="viewhost.php?host=riovld46.globoi.com">host</a>
+	        	</center></td>
+		</tr>
+	{% endfor %}
+	
+<!--
+	<tr bgcolor="#eeeeee">
+        	<td>riovld46.globoi.com</td>
+
+        	<td><center>119</center></td>
+        	<td><center>
+                	<a href="viewfacts.php?host=riovld46.globoi.com"><img src="server.png" title="View Facts" border=0></a>
+                	<a href="viewhost.php?host=riovld46.globoi.com"><img src="book_open.png" title="View Host" border=0></a>
+        	</center></td>
+	</tr>
+		<tr bgcolor="#dddddd">
+        	<td>riovld48.globoi.com</td>
+
+        	<td><center>66</center></td>
+        	<td><center>
+                	<a href="viewfacts.php?host=riovld48.globoi.com"><img src="server.png" title="View Facts" border=0></a>
+                	<a href="viewhost.php?host=riovld48.globoi.com"><img src="book_open.png" title="View Host" border=0></a>
+        	</center></td>
+	</tr>
+		<tr bgcolor="#eeeeee">
+        	<td>riovld50.globoi.com</td>
+
+        	<td><center>95</center></td>
+        	<td><center>
+                	<a href="viewfacts.php?host=riovld50.globoi.com"><img src="server.png" title="View Facts" border=0></a>
+                	<a href="viewhost.php?host=riovld50.globoi.com"><img src="book_open.png" title="View Host" border=0></a>
+        	</center></td>
+	</tr>
+-->
 	</table>
+</center>
 
 {% endblock %}

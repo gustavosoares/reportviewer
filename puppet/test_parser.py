@@ -4,7 +4,7 @@ from parser.config import *
 from parser.puppethost import puppetHost
 
 
-
+#As definicoes do diretorios sao obtidas pelo import parser.config
 
 reports_dict = parse_report(REPORTDIR)
 hosts = []

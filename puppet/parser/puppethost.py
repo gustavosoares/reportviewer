@@ -1,21 +1,24 @@
 from parser.config import *
+
 import os
 import yaml
 
 class puppetHost:
 	
 	def __init__(self, hostname = '', yamlfiles = []):
-		self.hostname = hostname
+		self.name = hostname
 		self.yamlfiles = yamlfiles
 		self.reportdir = REPORTDIR
 		
 	def __str__(self):
-		return 'Hostname: %s' % (self.hostname)
-		#return 'Hostname: %s\nyamlfiles: %s' % (self.hostname, self.yamlfiles)
-		
+		return 'Hostname (reports: %s): %s' % (len(self.yamlfiles), self.name)
+	
+	def total_reports(self):
+		return len(self.yamlfiles)
+			
 	def loadFacts(self):
 		self.facts = {}
-		yamlfile = YAMLDIR + "/facts/" + self.hostname + ".yaml"
+		yamlfile = YAMLDIR + "/facts/" + self.name + ".yaml"
 		if os.path.exists(yamlfile):
 			file = open(yamlfile, 'r')
 			c = file.read()
