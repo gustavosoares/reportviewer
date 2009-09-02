@@ -1,12 +1,11 @@
 # Django settings for puppet project.
 import os
 
-
 # where your reports are stored, same as reportdir in puppet.conf
-REPORTDIR = "/Users/gustavosoares/scripts/htdocs-puppet/puppetreports"
+REPORTDIR = "/opt/puppet/reports"
 
 # where your rrd files are stored, same as rrddir in puppet.conf
-RRDDIR = "/Users/gustavosoares/scripts/htdocs-puppet/rrd"
+RRDDIR = "/opt/puppet/rrd"
 
 # where to find the rrd's on the web, can be full url or relative
 RRDROOT = "/rrd"
@@ -88,5 +87,5 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'puppet.reports',
+    'puppet.reportsview',
 )
