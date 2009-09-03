@@ -14,7 +14,7 @@
 		<td><center><b>Actions</b></center></td>
 	</tr>
 	{% for host in hosts %}
-		<tr class="row1">
+		<tr class={% cycle 'row1' 'row2' %}>
 	        	<td><center>{{ host.name }}</center></td>
 	        	<td><center>{{ host.total_reports }}</center></td>
 	        	<td><center>

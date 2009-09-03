@@ -29,7 +29,7 @@
 	         	<td><b>Value:</b></td>
 	         </tr>
 	       	 {% for i in facts.values.items %}
-	       	 	<tr class="row1">
+	       	 	<tr class={% cycle 'row1' 'row2' %}>
 	       	 	{% ifnotequal i.0 'sshdsakey' %}
 	       	 		{% ifnotequal i.0 'sshrsakey' %}
 			    		<td><b>{{ i.0 }}:</b></td>
