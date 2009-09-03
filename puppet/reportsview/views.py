@@ -23,4 +23,8 @@ def reports(request):
 	return render_to_response('reports.html', { 'hosts' : hosts })
 	
 def facts(request, hostname=''):
-	return render_to_response('facts.html', { 'hostname' : hostname })
+	yamlfile = settings.YAMLDIR + "/facts/" + hostname + ".yaml"
+	facts = load_yaml(yamlfile)
+	print '*' * 60
+	print 'facts: %s\n' % facts 
+	return render_to_response('facts.html', { 'hostname' : hostname, 'facts' : facts })

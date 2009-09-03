@@ -11,7 +11,7 @@ def parse_report(reportdir):
 		host_to_yaml[host] = yamls
 	
 	return host_to_yaml
-	
+
 #Parses a yaml file to a python dictionary
 def load_yaml(yamlfile):
 	yaml_dict = {}

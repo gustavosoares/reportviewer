@@ -6,7 +6,43 @@
 {% block content %}
 	 
 <center>
-<h1>Facts from {{hostname}}</h1>
+
+        <table>
+         <tr><td colspan=3 align=center><font size=+2>Facts for {{hostname}}</font></td></tr>
+         <tr><td>&nbsp;</td></tr>
+         <tr>
+	         <td>
+		        <table>
+		        <tr><td align="right"><b>Kernel:</b></td><td>{{ facts.values.kernelrelease }}</td><td>&nbsp;</td><td align="right"><b>OS:</b></td><td>{% if facts.values.lsbdistdescription %} {{ facts.values.lsbdistdescription }} {% else %} {{ facts.values.operatingsystem }} {% endif %}</td></tr>
+		        <tr><td align="right"><b>Arch:</b></td><td>{{ facts.values.architecture }}</td><td>&nbsp;</td><td align="right"><b>CPU:</b></td><td>{{ facts.values.processor0 }}</td></tr>
+		        <tr><td align="right"><b>Memory:</b></td><td>{{ facts.values.memorysize }}</td><td>&nbsp;</td><td align="right"><b>Swap:</b></td><td>{{ facts.values.swapsize }}</td></tr>
+		        <tr><td align="right"><b>Puppet:</b></td><td>{{ facts.values.puppetversion }}</td><td>&nbsp;</td><td align="right"><b>Facter:</b></td><td>{{ facts.values.facterversion }}</td></tr>
+		        </table>
+	         </td>
+         </tr>
+         <tr>
+         	<td>&nbsp;</td>
+         </tr>
+         <table>
+	         <tr>
+	         	<td><b>Fact:</b></td>
+	         	<td><b>Value:</b></td>
+	         </tr>
+	       	 {% for i in facts.values.items %}
+	       	 	<tr class="row1">
+	       	 	{% ifnotequal i.0 'sshdsakey' %}
+	       	 		{% ifnotequal i.0 'sshrsakey' %}
+			    		<td><b>{{ i.0 }}:</b></td>
+			    		<td>{{ i.1 }}</td>
+				    {% endifnotequal %}
+			    {% endifnotequal %}
+			    </tr>
+			 {% endfor %} 
+	 	</table>
+	</table>
+
+
+
 </center>
 
 {% endblock %}

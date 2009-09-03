@@ -1,4 +1,5 @@
-from parser.config import *
+from django.conf import settings
+#from parser.config import *
 from parser.util import *
 
 import os
@@ -9,7 +10,7 @@ class puppetHost:
 	def __init__(self, hostname = '', yamlfiles = []):
 		self.name = hostname
 		self.yamlfiles = yamlfiles
-		self.reportdir = REPORTDIR
+		self.reportdir = settings.REPORTDIR
 		
 	def __str__(self):
 		return 'Hostname (reports: %s): %s' % (len(self.yamlfiles), self.name)
@@ -18,6 +19,6 @@ class puppetHost:
 		return len(self.yamlfiles)
 			
 	def loadFacts(self):
-		yamlfile = YAMLDIR + "/facts/" + self.name + ".yaml"
+		yamlfile = settings.YAMLDIR + "/facts/" + self.name + ".yaml"
 		return load_yaml(yamlfile)
 
