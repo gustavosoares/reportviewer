@@ -1,4 +1,11 @@
-body { margin:.2; padding:0; font-size:12px; font-family:"Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif; color:#333; background:#eef; }
+body { 
+  margin:10px; 
+  padding:0; 
+  font-size:12px; 
+  font-family:"Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif; 
+  color:#333; 
+  background:#fff; 
+}
 
 .all {
   position: absolute;
@@ -10,7 +17,6 @@ body { margin:.2; padding:0; font-size:12px; font-family:"Lucida Grande","DejaVu
 }
 
 .project {
-
   border-top: 1px solid silver;
   margin-top: 10px;
   background-color: white;
@@ -39,7 +45,7 @@ body { margin:.2; padding:0; font-size:12px; font-family:"Lucida Grande","DejaVu
 }
 
 
-/* LINKS */
+/* LINKSSSSS */
 a:link, a:visited { color: #5b80b2; text-decoration:none; }
 a:hover { color: #036; }
 a img { border:none; }
