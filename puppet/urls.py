@@ -8,7 +8,8 @@ from puppet.reportsview.views import *
 urlpatterns = patterns('',
     # Example:
     (r'^puppet/reports', reports),
-    (r'^puppet/facts/(?P<hostname>[^/]+)', facts),
+    (r'^puppet/facts/(?P<hostname>[^/]+)$', facts),
+    (r'^puppet/viewlog/(?P<hostname>[^/]+)$', viewlog),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:

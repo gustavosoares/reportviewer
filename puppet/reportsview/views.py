@@ -25,7 +25,7 @@ def reports(request):
 def facts(request, hostname=''):
 	yamlfile = settings.YAMLDIR + "/facts/" + hostname + ".yaml"
 	facts = load_yaml(yamlfile)
-	print 'mediaroot: %s' % settings.MEDIA_ROOT
-	print '*' * 60
-	print 'facts: %s\n' % facts 
 	return render_to_response('facts.html', { 'hostname' : hostname, 'facts' : facts })
+
+def viewlog(request, hostname=''):
+	return render_to_response('viewlog.html', { 'hostname' : hostname })	
