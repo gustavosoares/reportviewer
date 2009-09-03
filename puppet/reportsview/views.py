@@ -20,4 +20,7 @@ def reports(request):
 		p = puppetHost(hostname, yamlfiles)
 		hosts.append(p)
 
-	return render_to_response('reports.html', { 'hosts' : hosts })	
+	return render_to_response('reports.html', { 'hosts' : hosts })
+	
+def facts(request, hostname=''):
+	return render_to_response('facts.html', { 'hostname' : hostname })
