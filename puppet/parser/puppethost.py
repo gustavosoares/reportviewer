@@ -1,4 +1,5 @@
 from parser.config import *
+from parser.util import *
 
 import os
 import yaml
@@ -17,14 +18,6 @@ class puppetHost:
 		return len(self.yamlfiles)
 			
 	def loadFacts(self):
-		self.facts = {}
 		yamlfile = YAMLDIR + "/facts/" + self.name + ".yaml"
-		if os.path.exists(yamlfile):
-			file = open(yamlfile, 'r')
-			c = file.read()
-			c = c.replace('--- !ruby/object:Puppet::Node::Facts','')
-			self.facts = yaml.load(c)
-		else:
-			raise 'File %s does not exists' % yamlfile			
-		
-		return self.facts
+		return load_yaml(yamlfile)
+

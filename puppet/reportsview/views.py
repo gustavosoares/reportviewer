@@ -6,7 +6,7 @@ from django import forms
 from django.conf import settings
 from django.shortcuts import render_to_response
 
-from parser.reports import parse_report
+from parser.util import *
 from parser.puppethost import puppetHost
 
 def reports(request):
