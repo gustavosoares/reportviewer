@@ -1,4 +1,4 @@
-
+import time
 import os
 import yaml
 
@@ -14,13 +14,28 @@ def parse_report(reportdir):
 
 #Parses a yaml file to a python dictionary
 def load_yaml(yamlfile):
+	#print 'parsing yaml: %s' % yamlfile
 	yaml_dict = {}
 	if os.path.exists(yamlfile):
 		file = open(yamlfile, 'r')
 		c = file.read()
+		#replaces some weirdness
 		c = c.replace('--- !ruby/object:Puppet::Node::Facts','')
+		c = c.replace('--- !ruby/object:Puppet::Transaction::Report','')
+		c = c.replace('- !ruby/object:Puppet::Util::Log','')
+		c = c.replace('!ruby/object:Puppet::Util::Metric','')
+		c = c.replace('!ruby/object:RRDtool','')		
 		yaml_dict = yaml.load(c)
 	else:
 		raise 'Cannot parse yaml file: %s does not exists' % yamlfile			
 	
-	return yaml_dict	
+	return yaml_dict
+
+def start_counter():
+	return time.time()
+	
+def elapsed(inicio):
+	fim = time.time()
+	elapsed = (fim - inicio) / 60
+	print 'duracao: %f min' % elapsed
+
