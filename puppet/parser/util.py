@@ -1,6 +1,7 @@
 import time
 import os
 import yaml
+import logging
 
 #Parses puppets reports dir
 def parse_report(reportdir):
@@ -27,7 +28,7 @@ def load_yaml(yamlfile):
 		c = c.replace('!ruby/object:RRDtool','')		
 		yaml_dict = yaml.load(c)
 	else:
-		raise 'Cannot parse yaml file: %s does not exists' % yamlfile			
+		raise Exception, 'Cannot parse yaml file: %s does not exists' % yamlfile			
 	
 	return yaml_dict
 
@@ -37,5 +38,6 @@ def start_counter():
 def elapsed(inicio):
 	fim = time.time()
 	elapsed = (fim - inicio) / 60
-	print 'duracao: %f min' % elapsed
+	#print 'duracao: %f min' % elapsed
+	logging.debug('duracao: %f min' % elapsed)
 

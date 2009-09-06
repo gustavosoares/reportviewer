@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
+import logging
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django import forms
@@ -28,7 +29,8 @@ def facts(request, hostname=''):
 	return render_to_response('facts.html', { 'hostname' : hostname, 'facts' : facts })
 
 def viewlog(request, hostname=''):
-	print 'view log for %s' % hostname
+	#print 'view log for %s' % hostname
+	logging.info('view log for %s' % hostname)
 	p = puppetHost(hostname, settings.REPORTDIR)
 	yamls_list = p.get_yamls()
 	return render_to_response('viewlog.html', { 'hostname' : hostname })	

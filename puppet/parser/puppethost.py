@@ -5,6 +5,7 @@ from parser.util import *
 import os
 import time
 import yaml
+import logging
 
 class puppetHost:
 	
@@ -29,7 +30,8 @@ class puppetHost:
 		
 	#return a list of yaml files parsed to dict from a specific host
 	def get_yamls(self):
-		print 'getting yamsl for host %s' % self.name
+		#print 'getting yamls for host %s' % self.name
+		logging.debug('getting yamls for host %s' % self.name)
 		inicio = start_counter()
 		self.yaml_files = os.listdir(self.reportdir + '/' + self.name)
 		#TODO cachear o yamls

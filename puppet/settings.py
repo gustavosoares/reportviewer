@@ -1,4 +1,15 @@
 # Django settings for puppet project.
+import logging
+
+LOG_FILENAME = '/tmp/django-puppet.log'
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    format = '%(asctime)s %(levelname)s %(message)s',
+    filename = LOG_FILENAME,
+    filemode = 'a'
+)
+
 import os
 
 # where your reports are stored, same as reportdir in puppet.conf
@@ -11,7 +22,7 @@ RRDDIR = "/opt/puppet/rrd"
 RRDROOT = "/rrd"
 
 # where the puppetmaster yaml directory is
-YAMLDIR = "/var/lib/puppet/yaml"
+YAMLDIR = "/opt/puppet/yaml"
 
 path = os.path.dirname(__file__)
 
