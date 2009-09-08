@@ -22,6 +22,7 @@ class puppetHost:
 		self.yamls = []
 		self.reports_list = []
 
+	#lists yamls files for the host
 	def list_yamls(self):
 		self.yamlfiles = os.listdir(self.reportdir + '/' + self.name)
 	
@@ -41,11 +42,17 @@ class puppetHost:
 		if len(self.yamls) == 0:
 			logging.debug('getting yamls for host %s' % self.name)
 			inicio = start_counter()
-			self.yaml_files = os.listdir(self.reportdir + '/' + self.name)
+			self.list_yamls()
+			#self.yaml_files = os.listdir(self.reportdir + '/' + self.name)
 			#TODO cachear o yamls
-			for yaml in self.yaml_files:
+			for yaml in self.yamlfiles:
 				if yaml.endswith(".yaml"):
-					self.yamls.append(load_yaml(self.reportdir + '/' + self.name + '/' + yaml))
+					yaml_content = load_yaml(self.reportdir + '/' + self.name + '/' + yaml)
+					#TODO: remove the next 3 lines
+					#if yaml == '200909010020.yaml':
+						#logging.debug('yaml file: %s' % yaml)
+						#logging.debug(yaml_content)
+					self.yamls.append(yaml_content)
 			elapsed(inicio)
 			#logging.debug('yamls: %s' % self.yamls[0])
 		else:
@@ -67,7 +74,15 @@ class puppetHost:
 				r.out_of_sync = yaml['metrics']['resources']['values'][3][2]
 				r.count_resources = yaml['metrics']['resources']['values'][7][2]
 				r.run_time = yaml['metrics']['time']['values'][1][2]
+				r.set_datetime(yaml['time'])
+				r.log_lines = len(yaml['logs'])
+				self.reports_list.append(r)
+				logging.debug('*' * 70)
+				logging.debug('time: %s' % r.datetime)	
 				logging.debug('changes: %s' % r.count_changes)
 				logging.debug('out_of_sync: %s' % r.out_of_sync)
 				logging.debug('resources: %s' % r.count_resources)
 				logging.debug('run_time: %s' % r.run_time)
+				logging.debug('log lines: %s' % r.log_lines)
+
+		return self.reports_list
