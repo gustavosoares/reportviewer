@@ -4,6 +4,7 @@ import yaml
 import logging
 
 #Parses puppets reports dir
+'''
 def parse_report(reportdir):
 	hosts = os.listdir(reportdir)
 	host_to_yaml = {}
@@ -12,7 +13,8 @@ def parse_report(reportdir):
 		host_to_yaml[host] = yamls
 	
 	return host_to_yaml
-
+'''
+	
 #Parses a yaml file to a python dictionary
 def load_yaml(yamlfile):
 	#print 'parsing yaml: %s' % yamlfile

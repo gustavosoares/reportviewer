@@ -11,16 +11,18 @@ from parser.util import *
 from parser.puppethost import puppetHost
 
 def reports(request):
-	print 'report dir: %s' % settings.REPORTDIR
+	logging.debug('report dir: %s' % settings.REPORTDIR)
+	logging.debug('listing reports for hosts')
 	#parse reportdir
-	hosts_to_yaml = parse_report(settings.REPORTDIR)
+	
+	hosts_dir = os.listdir(settings.REPORTDIR)
 	hosts = []
-
-	for hostname in hosts_to_yaml.keys():
-		yamlfiles = hosts_to_yaml[hostname]
-		p = puppetHost(hostname, yamlfiles)
+	for host in hosts_dir:
+		p = puppetHost(host, settings.REPORTDIR)
+		p.list_yamls()
 		hosts.append(p)
 
+	logging.debug('done listing reports for hosts')
 	return render_to_response('reports.html', { 'hosts' : hosts })
 	
 def facts(request, hostname=''):

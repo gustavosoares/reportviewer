@@ -10,17 +10,21 @@ import logging
 
 class puppetHost:
 	
-	def __init__(self, hostname = '', yamlfiles = []):
-		self.name = hostname
-		self.yamlfiles = yamlfiles
-		self.reportdir = settings.REPORTDIR
+	#def __init__(self, hostname = '', yamlfiles = []):
+	#	self.name = hostname
+	#	self.yamlfiles = yamlfiles
+	#	self.reportdir = settings.REPORTDIR
 
 	def __init__(self, hostname = '', reportdir = ''):
 		self.name = hostname
 		self.reportdir = settings.REPORTDIR
+		self.yamlfiles = []
 		self.yamls = []
 		self.reports_list = []
-		
+
+	def list_yamls(self):
+		self.yamlfiles = os.listdir(self.reportdir + '/' + self.name)
+	
 	def __str__(self):
 		return 'Hostname (reports: %s): %s' % (len(self.yamlfiles), self.name)
 	
