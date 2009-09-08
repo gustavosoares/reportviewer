@@ -7,7 +7,7 @@
 
 <center>
 
-        <table>
+    <table>
          <tr><td colspan=3 align=center><font size=+2>Log view for {{hostname}}</font></td></tr>
          <tr><td>&nbsp;</td></tr>
          <tr>
@@ -21,5 +21,40 @@
 
 
 </center>
+
+
+<center>
+<table>
+<tr><td colspan=3 align=center><font size=+2>Log view for {{ hostname }}</font></td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr valign="top"><td>
+<table>
+	<thead><tr><th><b>Time</b></th><th><b>Run Time</b></th><th><b>Changes</b>&nbsp;<img src="/media/magnifier.png" id="filter" valign="middle" title="Show only runs with changes"></th><th><b>Resources</b></th><th><b>Log Lines</b></th></tr></thead>
+	{# for yaml in yamls #}
+	<tr bgcolor="{% cycle 'row1' 'row2' %}">
+        	<td>{$reports[r].reporttime}</td>
+        	<td>{$reports[r].time.total}</td>
+        	<td {if $reports[r].changes.total == 0}class="no-changes"{/if}>{$reports[r].changes.total}</td>
+        	<td>{$reports[r].resources.total}</td>
+        	<td>{$reports[r].logs}</td>
+        	<td><center>
+                <a href="viewreport.php?host={{ hostname|escape}}&report={$reports[r].filename}"><img src="/media/book_open.png" title="View Host" border=0></a>
+        	</center></td>
+	</tr>
+	{# endfor #}
+</table>
+</td>
+<td>&nbsp;</td>
+<td valign="top">
+	<table>
+		<thead><tr><td><center><b>Daily Graphs</b></center></td></tr></thead> 
+		<tr><td><a href="{{ rrdroot }}/{{ hostname }}/changes.html"><img src="{{ rrdroot }}/{{ hostname }}/changes-daily.png" border=0></a></td></tr>
+		<tr><td><a href="{{ rrdroot }}/{{ hostname }}/resources.html"><img src="{{ rrdroot }}/{{ hostname }}/resources-daily.png" border=0></a></td></tr>
+		<tr><td><a href="{{ rrdroot }}/{{ hostname }}/time.html"><img src="{{ rrdroot }}/{{ hostname }}/time-daily.png" border=0></a></td></tr>
+	</table>
+</td></tr>
+</table>
+</center>
+
 
 {% endblock %}

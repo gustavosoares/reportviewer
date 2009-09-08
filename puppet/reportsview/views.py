@@ -33,4 +33,8 @@ def viewlog(request, hostname=''):
 	logging.info('view log for %s' % hostname)
 	p = puppetHost(hostname, settings.REPORTDIR)
 	yamls_list = p.get_yamls()
-	return render_to_response('viewlog.html', { 'hostname' : hostname })	
+	p.get_reportlist()
+	return render_to_response('viewlog.html', 
+		{ 'hostname' : hostname,
+		'rrdroot' : settings.RRDROOT,
+		'yamls' : yamls_list })	
