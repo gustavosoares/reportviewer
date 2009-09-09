@@ -84,6 +84,6 @@ class puppetHost:
 				logging.debug('out_of_sync: %s' % r.out_of_sync)
 				logging.debug('resources: %s' % r.count_resources)
 				logging.debug('run_time: %s' % r.runtime())
-				#logging.debug('log lines: %s' % r.log_lines)
+				logging.debug('yamlfile: %s' % r.yamlfile_name())
 
 		return self.reports_list

@@ -29,7 +29,7 @@
         	<td><center>{{ report.count_resources }}</center></td>
         	<td><center>{{ report.out_of_sync }}</center></td>
         	<td><center>
-                <a href="viewreport.php?host={{ hostname|escape}}"><img src="/media/images/magnifier.png" title="View Host" border=0></a>
+                <a href="{{ hostname|escape}}/{{ report.yamlfile_name }}"><img src="/media/images/magnifier.png" title="View Host" border=0></a>
         	</center></td>
 	</tr>
 	{% endfor %}

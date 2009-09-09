@@ -28,3 +28,7 @@ class puppetReport:
 		
 	def formatted_datetime(self):
 		return self.datetime.strftime('%d/%m/%y %H:%M:%S')
+
+	def yamlfile_name(self):
+		n = '%s.yaml' % self.datetime.strftime('20%y%m%d%H%M')
+		return n
