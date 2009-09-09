@@ -40,9 +40,6 @@ def viewlog(request, hostname='', yamlfile=None):
 		logs = yaml['logs']
 		logcount = len(logs)
 		r = p.get_report(yamlfile)
-		print yaml
-		print '*' * 60
-		print logs
 		return render_to_response('viewlog.html',
 			{ 'yamlfile' : yamlfile,
 			  'logcount' : logcount,
