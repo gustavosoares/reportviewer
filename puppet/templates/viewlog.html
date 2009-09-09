@@ -15,9 +15,10 @@
 		<tr>
 			<th><center><b>Time</b></center></th>
 			<th><center><b>Run Time (seg)</b></center></th>
-			<th><center><b>Changes</b>&nbsp;<img src="/media/magnifier.png" id="filter" valign="middle" title="Show only runs with changes"></th></center>
+			<th><center><b>Changes</b></th></center>
 			<th><center><b>Resources</b></center></th>
 			<th><center><b>Out of Syncs</b></center></th>
+			<th><center><b>&nbsp;</b></center></th>
 		</tr>
 	</thead>
 	{% for report in reports %}
@@ -28,7 +29,7 @@
         	<td><center>{{ report.count_resources }}</center></td>
         	<td><center>{{ report.out_of_sync }}</center></td>
         	<td><center>
-                <a href="viewreport.php?host={{ hostname|escape}}&report={$reports[r].filename}"><img src="/media/book_open.png" title="View Host" border=0></a>
+                <a href="viewreport.php?host={{ hostname|escape}}"><img src="/media/images/magnifier.png" title="View Host" border=0></a>
         	</center></td>
 	</tr>
 	{% endfor %}
