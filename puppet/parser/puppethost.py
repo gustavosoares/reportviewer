@@ -75,6 +75,7 @@ class puppetHost:
 				r.count_resources = yaml['metrics']['resources']['values'][7][2]
 				r.run_time = yaml['metrics']['time']['values'][1][2]
 				r.set_datetime(yaml['time'])
+				#commented cause it seems to be the same of changes
 				r.log_lines = len(yaml['logs'])
 				self.reports_list.append(r)
 				logging.debug('*' * 70)
@@ -83,6 +84,6 @@ class puppetHost:
 				logging.debug('out_of_sync: %s' % r.out_of_sync)
 				logging.debug('resources: %s' % r.count_resources)
 				logging.debug('run_time: %s' % r.runtime())
-				logging.debug('log lines: %s' % r.log_lines)
+				#logging.debug('log lines: %s' % r.log_lines)
 
 		return self.reports_list
