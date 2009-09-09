@@ -18,8 +18,8 @@
 	        	<td><center>{{ host.name }}</center></td>
 	        	<td><center>{{ host.total_reports }}</center></td>
 	        	<td><center>
-	                	<a href="facts/{{ host.name }}">facts</a>
-	                	<a href="viewlog/{{ host.name }}">log</a>
+	                	<a href="/puppet/facts/{{ host.name }}">facts</a>
+	                	<a href="/puppet/viewlog/{{ host.name }}">log</a>
 	        	</center></td>
 		</tr>
 	{% endfor %}

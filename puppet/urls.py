@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from puppet.reportsview.views import *
+from puppet.reports.views import *
 from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
@@ -8,9 +8,9 @@ from django.conf import settings
 
 urlpatterns = patterns('',
     # Example:
-    (r'^puppet/reports', reports),
+    (r'^puppet/?$', reports),
+    (r'^puppet/reports/?$', reports),
     (r'^puppet/facts/(?P<hostname>[^/]+)$', facts),
-    #(r'^puppet/viewlog/(?P<hostname>[^/]+)/?(?P<yamlfile>[^/]+)$', viewlog),
     (r'^puppet/viewlog/(?P<hostname>[^/]+)/(?P<yamlfile>[^/]+)?$', viewlog),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
