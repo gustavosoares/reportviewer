@@ -10,7 +10,8 @@ urlpatterns = patterns('',
     # Example:
     (r'^puppet/reports', reports),
     (r'^puppet/facts/(?P<hostname>[^/]+)$', facts),
-    (r'^puppet/viewlog/(?P<hostname>[^/]+)$', viewlog),
+    #(r'^puppet/viewlog/(?P<hostname>[^/]+)/?(?P<yamlfile>[^/]+)$', viewlog),
+    (r'^puppet/viewlog/(?P<hostname>[^/]+)/(?P<yamlfile>[^/]+)?$', viewlog),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:

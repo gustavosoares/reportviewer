@@ -5,47 +5,7 @@
 
 {% block content %}
 
-<center>
-<table>
-<tr><td colspan=3 align=center><font size=+2>Log view for {{ hostname }}</font></td></tr>
-<tr><td>&nbsp;</td></tr>
-<tr valign="top"><td>
-<table>
-	<thead>
-		<tr>
-			<th><center><b>Time</b></center></th>
-			<th><center><b>Run Time (seg)</b></center></th>
-			<th><center><b>Changes</b></th></center>
-			<th><center><b>Resources</b></center></th>
-			<th><center><b>Out of Syncs</b></center></th>
-			<th><center><b>&nbsp;</b></center></th>
-		</tr>
-	</thead>
-	{% for report in reports %}
-	<tr class="{% cycle 'row1' 'row2' %}">
-        	<td><center>{{ report.formatted_datetime }}</center></td>
-        	<td><center>{{ report.runtime }}</center></td>
-        	<td><center>{{ report.count_changes }}</center></td>
-        	<td><center>{{ report.count_resources }}</center></td>
-        	<td><center>{{ report.out_of_sync }}</center></td>
-        	<td><center>
-                <a href="{{ hostname|escape}}/{{ report.yamlfile_name }}"><img src="/media/images/magnifier.png" title="View Host" border=0></a>
-        	</center></td>
-	</tr>
-	{% endfor %}
-</table>
-</td>
-<td>&nbsp;</td>
-<td valign="top">
-	<table>
-		<thead><tr><td><center><b>Daily Graphs</b></center></td></tr></thead> 
-		<tr><td><a href="/media{{ rrdroot }}/{{ hostname }}/changes.html"><img src="/media{{ rrdroot }}/{{ hostname }}/changes-daily.png" border=0></a></td></tr>
-		<tr><td><a href="/media{{ rrdroot }}/{{ hostname }}/resources.html"><img src="/media{{ rrdroot }}/{{ hostname }}/resources-daily.png" border=0></a></td></tr>
-		<tr><td><a href="/media{{ rrdroot }}/{{ hostname }}/time.html"><img src="/media{{ rrdroot }}/{{ hostname }}/time-daily.png" border=0></a></td></tr>
-	</table>
-</td></tr>
-</table>
-</center>
+<h1>yamlfile: {{ yamlfile }}</h1>
 
 
 {% endblock %}

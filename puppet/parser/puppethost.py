@@ -37,26 +37,29 @@ class puppetHost:
 		return load_yaml(yamlfile)
 		
 	#return a list of yaml files parsed to dict from a specific host
-	def get_yamls(self):
-		#print 'getting yamls for host %s' % self.name
-		if len(self.yamls) == 0:
-			logging.debug('getting yamls for host %s' % self.name)
-			inicio = start_counter()
-			self.list_yamls()
-			#self.yaml_files = os.listdir(self.reportdir + '/' + self.name)
-			#TODO cachear o yamls
-			for yaml in self.yamlfiles:
-				if yaml.endswith(".yaml"):
-					yaml_content = load_yaml(self.reportdir + '/' + self.name + '/' + yaml)
-					#TODO: remove the next 3 lines
-					#if yaml == '200909010020.yaml':
-						#logging.debug('yaml file: %s' % yaml)
-						#logging.debug(yaml_content)
-					self.yamls.append(yaml_content)
-			elapsed(inicio)
-			#logging.debug('yamls: %s' % self.yamls[0])
+	def get_yamls(self, yamlfile=None):
+
+		if not yamlfile:
+			if len(self.yamls) == 0:
+				logging.debug('getting yamls for host %s' % self.name)
+				inicio = start_counter()
+				self.list_yamls()
+				#self.yaml_files = os.listdir(self.reportdir + '/' + self.name)
+				#TODO cachear o yamls
+				for yaml in self.yamlfiles:
+					if yaml.endswith(".yaml"):
+						yaml_content = load_yaml(self.reportdir + '/' + self.name + '/' + yaml)
+						self.yamls.append(yaml_content)
+				elapsed(inicio)
+			else:
+				logging.debug("yamls returned")
 		else:
-			logging.debug("yamls returned")
+			logging.debug("loading yaml %s" % yamlfile)
+			inicio = start_counter()
+			yaml_content = load_yaml(self.reportdir + '/' + self.name + '/' + yamlfile)
+			self.yamls.append(yaml_content)
+			elapsed(inicio)
+			
 		return self.yamls
 
 	def clear_yamls(self):
@@ -76,7 +79,7 @@ class puppetHost:
 				r.run_time = yaml['metrics']['time']['values'][1][2]
 				r.set_datetime(yaml['time'])
 				#commented cause it seems to be the same of changes
-				r.log_lines = len(yaml['logs'])
+				#r.log_lines = len(yaml['logs'])
 				self.reports_list.append(r)
 				logging.debug('*' * 70)
 				logging.debug('time: %s' % r.formatted_datetime())	
@@ -87,3 +90,18 @@ class puppetHost:
 				logging.debug('yamlfile: %s' % r.yamlfile_name())
 
 		return self.reports_list
+		
+	def get_log(self, yamlfile):
+		logging.debug('getting log lines from yamlfile %s' % yamlfile)
+		return self.get_yamls(yamlfile)[0]
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
