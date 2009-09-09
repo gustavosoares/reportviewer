@@ -32,7 +32,7 @@
 	<thead>
 		<tr>
 			<th><center><b>Time</b></center></th>
-			<th><center><b>Run Time</b></center></th>
+			<th><center><b>Run Time (seg)</b></center></th>
 			<th><center><b>Changes</b>&nbsp;<img src="/media/magnifier.png" id="filter" valign="middle" title="Show only runs with changes"></th></center>
 			<th><center><b>Resources</b></center></th>
 			<th><center><b>Out of Syncs</b></center></th>
@@ -41,8 +41,8 @@
 	</thead>
 	{% for report in reports %}
 	<tr bgcolor="{% cycle 'row1' 'row2' %}">
-        	<td><center>{{ report.datetime }}</center></td>
-        	<td><center>{{ report.run_time }}</center></td>
+        	<td><center>{{ report.formatted_datetime }}</center></td>
+        	<td><center>{{ report.runtime }}</center></td>
         	<td><center>{{ report.count_changes }}</center></td>
         	<td><center>{{ report.count_resources }}</center></td>
         	<td><center>{{ report.out_of_sync }}</center></td>

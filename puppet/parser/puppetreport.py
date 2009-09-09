@@ -23,3 +23,8 @@ class puppetReport:
 		#TODO: converter para o timezone correto
 		self.datetime = datetime
 
+	def runtime(self):
+		return '%.2f' % self.run_time
+		
+	def formatted_datetime(self):
+		return self.datetime.strftime('%d/%m/%y %H:%M:%S')

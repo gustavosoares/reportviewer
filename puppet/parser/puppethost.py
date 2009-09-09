@@ -78,11 +78,11 @@ class puppetHost:
 				r.log_lines = len(yaml['logs'])
 				self.reports_list.append(r)
 				logging.debug('*' * 70)
-				logging.debug('time: %s' % r.datetime)	
+				logging.debug('time: %s' % r.formatted_datetime())	
 				logging.debug('changes: %s' % r.count_changes)
 				logging.debug('out_of_sync: %s' % r.out_of_sync)
 				logging.debug('resources: %s' % r.count_resources)
-				logging.debug('run_time: %s' % r.run_time)
+				logging.debug('run_time: %s' % r.runtime())
 				logging.debug('log lines: %s' % r.log_lines)
 
 		return self.reports_list
