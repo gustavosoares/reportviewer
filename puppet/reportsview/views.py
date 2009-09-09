@@ -36,11 +36,20 @@ def viewlog(request, hostname='', yamlfile=None):
 
 		logging.info('getting yamlfile %s for host %s' % (yamlfile, hostname))
 		p = puppetHost(hostname, settings.REPORTDIR)
-		yaml = p.get_log(yamlfile)
+		yaml = p.get_yaml(yamlfile)
 		logs = yaml['logs']
+		logcount = len(logs)
+		r = p.get_report(yamlfile)
+		print yaml
+		print '*' * 60
 		print logs
 		return render_to_response('viewlog.html',
-			{ 'yamlfile' : yamlfile})
+			{ 'yamlfile' : yamlfile,
+			  'logcount' : logcount,
+			  'logs' : logs,
+			  'report' : r,
+			  'hostname' : hostname,
+			})
 
 	else:
 

@@ -13,8 +13,12 @@ class puppetReport:
 	def __init__(self):
 		self.count_changes = 0
 		self.out_of_sync = 0
+		self.failed_restarts = 0
+		self.failed = 0
+		self.restarted = 0
 		self.count_resources = 0
 		self.run_time = 0.0
+		self.config_retrieval = 0.0
 		self.log_lines = 0
 		self.datetime = None
 	
@@ -25,6 +29,9 @@ class puppetReport:
 
 	def runtime(self):
 		return '%.2f' % self.run_time
+
+	def configretrieval(self):
+		return '%.2f' % self.config_retrieval
 		
 	def formatted_datetime(self):
 		return self.datetime.strftime('%d/%m/%y %H:%M:%S')
