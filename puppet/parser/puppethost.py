@@ -88,7 +88,7 @@ class puppetHost:
 		r.config_retrieval = yaml['metrics']['time']['values'][0][2]
 		r.set_datetime(yaml['time'])
 		logging.debug('*' * 70)
-		logging.debug('time: %s' % r.formatted_datetime())	
+		logging.debug('time: %s' % r.formatted_datetime_gmt())	
 		logging.debug('changes: %s' % r.count_changes)
 		logging.debug('out_of_sync: %s' % r.out_of_sync)
 	
