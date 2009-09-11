@@ -21,9 +21,9 @@
 			<th><center><b>&nbsp;</b></center></th>
 		</tr>
 	</thead>
-	{% for report in reports %}
+	{% for report in reports reversed %}
 	<tr class="{% cycle 'row1' 'row2' %}">
-        	<td><center>{{ report.formatted_datetime }}</center></td>
+        	<td><center>{{ report.datetime|date:"d/m/Y H:i:s" }}</center></td>
         	<td><center>{{ report.runtime }}</center></td>
         	<td><center>{{ report.count_changes }}</center></td>
         	<td><center>{{ report.count_resources }}</center></td>
