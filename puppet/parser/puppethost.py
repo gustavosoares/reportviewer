@@ -1,5 +1,5 @@
 from django.conf import settings
-#from parser.config import *
+from django.core.cache import cache
 from parser.util import *
 from parser.puppetreport import puppetReport
 
@@ -44,7 +44,14 @@ class puppetHost:
 		inicio = start_counter()
 		yaml_content = {}
 		if yamlfile.endswith(".yaml"):
-			yaml_content = load_yaml(self.reportdir + '/' + self.name + '/' + yamlfile)
+			yaml_content = cache.get(yamlfile)
+			if not yaml_content:
+				logging.debug('yamlfile %s not cached' % yamlfile)
+				yaml_content = load_yaml(self.reportdir + '/' + self.name + '/' + yamlfile)
+				cache.set(yamlfile, yaml_content)
+			else:
+				logging.debug('yamlfile %s returned from cache' % yamlfile)
+				
 			self.yamls.append(yaml_content)
 		elapsed(inicio)
 		return yaml_content
@@ -59,7 +66,6 @@ class puppetHost:
 		if len(self.yamls) == 0:
 			logging.debug('getting all yamls for host %s' % self.name)
 			inicio = start_counter()
-			#TODO cachear o yamls
 			for yaml in self.yamlfiles:
 				self.load_yaml(yaml)
 			elapsed(inicio)
@@ -88,6 +94,7 @@ class puppetHost:
 		r.run_time = yaml['metrics']['time']['values'][1][2]
 		r.config_retrieval = yaml['metrics']['time']['values'][0][2]
 		r.set_datetime(yaml['time'])
+		'''
 		logging.debug('*' * 70)
 		logging.debug('time: %s' % r.formatted_datetime_gmt())	
 		logging.debug('changes: %s' % r.count_changes)
@@ -101,6 +108,7 @@ class puppetHost:
 		logging.debug('run_time: %s' % r.runtime())
 		logging.debug('config_retrieval: %s' % r.configretrieval())
 		logging.debug('yamlfile: %s' % r.yamlfile_name())
+		'''
 		return r
 		
 	#returns a report list

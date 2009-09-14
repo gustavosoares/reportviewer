@@ -24,6 +24,11 @@ RRDROOT = "/rrd"
 # where the puppetmaster yaml directory is
 YAMLDIR = "/opt/puppet/yaml"
 
+#7 days cache
+CACHE_BACKEND = "memcached://localhost:11211/?timeout=604800"
+
+
+
 path = os.path.dirname(__file__)
 
 TEMPLATE_DIRS = (os.path.abspath(path + '/templates'))

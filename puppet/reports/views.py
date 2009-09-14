@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django import forms
 from django.conf import settings
 from django.shortcuts import render_to_response
+from django.core.cache import cache
 
 from parser.util import *
 from parser.puppethost import puppetHost
