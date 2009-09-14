@@ -49,13 +49,15 @@ def viewlog(request, hostname='', yamlfile=None):
 			})
 
 	else:
-
+		inicio = start_counter()
 		logging.info('getting info for hostname %s' % hostname)
 		p = puppetHost(hostname, settings.REPORTDIR)
 		p.list_yamls()
 		reports = p.get_reportlist()
-		
+		gen_time = '%.2f' % elapsed(inicio)
+
 		return render_to_response('viewhosts.html', 
 			{ 'hostname' : hostname,
 			'rrdroot' : settings.RRDROOT,
+			'gen_time' : gen_time,
 			'reports' : reports })			

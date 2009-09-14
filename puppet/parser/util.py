@@ -41,5 +41,6 @@ def elapsed(inicio):
 	fim = time.time()
 	elapsed = (fim - inicio) / 60
 	#print 'duracao: %f min' % elapsed
-	logging.debug('duracao: %f min' % elapsed)
+	logging.debug('duracao: %.2f min' % elapsed)
+	return elapsed
 
