@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.abspath("%s/.." % PROJECT_ROOT))
 sys.path.insert(0, PROJECT_ROOT)
 
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'django.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'puppet.settings'
 
 import django.core.handlers.wsgi
 application = django.core.handlers.wsgi.WSGIHandler()
