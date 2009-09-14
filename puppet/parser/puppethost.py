@@ -26,6 +26,7 @@ class puppetHost:
 	#lists yamls files for the host
 	def list_yamls(self):
 		self.yamlfiles = os.listdir(self.reportdir + '/' + self.name)
+		self.yamlfiles.sort()
 	
 	def __str__(self):
 		return 'Hostname (reports: %s): %s' % (len(self.yamlfiles), self.name)
