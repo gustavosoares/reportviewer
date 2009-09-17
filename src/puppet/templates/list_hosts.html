@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Puppet reports{% endblock %}
+
+
+{% block content %}
+	 
+<center>
+<table>
+	<tr><td colspan=3><font size=+2 align="center">Choose a host to view reports for</font></td></tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr><td><center><b>Hostname</b></center></td>
+		<td><center><b>Total Reports</b></center></td>
+		<td><center><b>Actions</b></center></td>
+	</tr>
+	{% for host in hosts %}
+		<tr class={% cycle 'row1' 'row2' %}>
+	        	<td><center>{{ host.name }}</center></td>
+	        	<td><center>{{ host.total_reports }}</center></td>
+	        	<td><center>
+	                	<a href="/puppet/facts/{{ host.name }}">facts</a>
+	                	<a href="/puppet/viewlog/{{ host.name }}">log</a>
+	        	</center></td>
+		</tr>
+	{% endfor %}
+	
+	</table>
+</center>
+
+{% endblock %}

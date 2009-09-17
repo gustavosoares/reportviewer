@@ -1,11 +1,13 @@
 import os
 #from parser.reports import parse_report
-from parser.util import *
+from core import util
+from core.repository import noderepository
 #from parser.puppethost import puppetHost
 
 
 #As definicoes do diretorios sao obtidas pelo import parser.config
 
+'''
 print 'list dir performance'
 inicio = start_counter()
 yamlfiles = os.listdir('/opt/puppet/reports/riovld46.globoi.com/')
@@ -20,7 +22,9 @@ elapsed(inicio)
 print '*' * 60
 print ''
 print yamlfiles_ls
+'''
 
+print noderepository.find_roles()
 
 yamlfile = '/opt/puppet/reports/riovld46.globoi.com/200909010020.yaml'
 #yamlfile = '/tmp/teste.yaml'

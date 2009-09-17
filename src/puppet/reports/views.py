@@ -8,10 +8,13 @@ from django.conf import settings
 from django.shortcuts import render_to_response
 from django.core.cache import cache
 
-from parser.util import *
-from parser.puppethost import puppetHost
+from core import util
+from core.puppet.puppethost import puppetHost
+from core.repository import noderepository
 
-def reports(request):
+import os
+
+def list_hosts(request):
 
 	logging.debug('listing reports in %s for hosts' % settings.REPORTDIR)
 	
@@ -24,12 +27,27 @@ def reports(request):
 
 	logging.debug('done listing reports for hosts')
 	
-	return render_to_response('reports.html', { 'hosts' : hosts })
+	return render_to_response('list_hosts.html', { 'hosts' : hosts })
+
+def list_roles(request):
+
+	logging.debug('listing roles in %s' % settings.NODES_FILE)
+	
+	role_to_host = noderepository.find_roles()
+	json_obj = noderepository.find_roles_json()
+	#json_obj = util.enconde_json(role_to_host)
+	logging.debug('json object: %s' % json_obj)
+	logging.debug('done listing roles')
+	
+	return render_to_response('list_roles.html', 
+			{ 'json' : json_obj,
+				'roles' : role_to_host })
 	
 def facts(request, hostname=''):
 	yamlfile = settings.YAMLDIR + "/facts/" + hostname + ".yaml"
-	facts = load_yaml(yamlfile)
-	return render_to_response('facts.html', { 'hostname' : hostname, 'facts' : facts })
+	facts = util.load_yaml(yamlfile)
+	return render_to_response('facts.html', 
+				{ 'hostname' : hostname, 'facts' : facts })
 
 def viewlog(request, hostname='', yamlfile=None):
 	
@@ -50,12 +68,13 @@ def viewlog(request, hostname='', yamlfile=None):
 			})
 
 	else:
-		inicio = start_counter()
+	
+		inicio = util.start_counter()
 		logging.info('getting info for hostname %s' % hostname)
 		p = puppetHost(hostname, settings.REPORTDIR)
 		p.list_yamls()
 		reports = p.get_reportlist()
-		gen_time = '%.2f' % elapsed(inicio)
+		gen_time = '%.2f' % util.elapsed(inicio)
 
 		return render_to_response('viewhosts.html', 
 			{ 'hostname' : hostname,

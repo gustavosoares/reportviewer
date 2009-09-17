@@ -8,8 +8,9 @@ from django.conf import settings
 
 urlpatterns = patterns('',
     # Example:
-    (r'^puppet/?$', reports),
-    (r'^puppet/reports/?$', reports),
+    (r'^puppet/?$', list_roles),
+    (r'^puppet/hosts/?$', list_hosts),
+    (r'^puppet/roles/?$', list_roles),    
     (r'^puppet/facts/(?P<hostname>[^/]+)$', facts),
     (r'^puppet/viewlog/(?P<hostname>[^/]+)/(?P<yamlfile>[^/]+)?$', viewlog),
 
@@ -23,7 +24,6 @@ urlpatterns = patterns('',
 
 from django.conf import settings
 import os
-
 
 path = os.path.dirname(__file__)
 MEDIA_ROOT = (os.path.abspath(path + '/media'))

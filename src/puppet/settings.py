@@ -24,6 +24,8 @@ RRDROOT = "/rrd"
 # where the puppetmaster yaml directory is
 YAMLDIR = "/opt/puppet/yaml"
 
+NODES_FILE = "/etc/puppet/manifests/nodes.pp"
+
 #7 days cache
 CACHE_BACKEND = "memcached://localhost:11211/?timeout=604800"
 
