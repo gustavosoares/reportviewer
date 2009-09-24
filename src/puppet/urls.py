@@ -1,29 +1,32 @@
+from django.contrib import admin
 from django.conf.urls.defaults import *
 from puppet.reports.views import *
+from puppet.monitor.views import *
 from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
-# admin.autodiscover()
+admin.autodiscover()
 
 urlpatterns = patterns('',
     # Example:
-    (r'^puppet/?$', reports),
-    (r'^puppet/reports/?$', reports),
+    (r'^puppet/?$', list_roles),
+    (r'^puppet/hosts/?$', list_hosts),
+    (r'^puppet/roles/?$', list_roles),    
     (r'^puppet/facts/(?P<hostname>[^/]+)$', facts),
+    (r'^puppet/graph/(?P<hostname>[^/]+)$', graph),
     (r'^puppet/viewlog/(?P<hostname>[^/]+)/(?P<yamlfile>[^/]+)?$', viewlog),
-
+    (r'^puppet/viewrole/(?P<name>[^/]+)$', viewrole),
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # (r'^admin/', include(admin.site.urls)),
+    (r'^admin/', include(admin.site.urls)),
 )
 
 from django.conf import settings
 import os
-
 
 path = os.path.dirname(__file__)
 MEDIA_ROOT = (os.path.abspath(path + '/media'))

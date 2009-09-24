@@ -1,5 +1,7 @@
 # Django settings for puppet project.
 import logging
+import os
+
 
 LOG_FILENAME = '/tmp/django-puppet.log'
 
@@ -10,7 +12,7 @@ logging.basicConfig(
     filemode = 'a'
 )
 
-import os
+
 
 # where your reports are stored, same as reportdir in puppet.conf
 REPORTDIR = "/opt/puppet/reports"
@@ -24,12 +26,17 @@ RRDROOT = "/rrd"
 # where the puppetmaster yaml directory is
 YAMLDIR = "/opt/puppet/yaml"
 
+NODES_FILE = "/etc/puppet/manifests/nodes.pp"
+ROLES_FILE = "/etc/puppet/manifests/classes/roles.pp"
+
 #7 days cache
 CACHE_BACKEND = "memcached://localhost:11211/?timeout=604800"
 
-
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 25
 
 path = os.path.dirname(__file__)
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 TEMPLATE_DIRS = (os.path.abspath(path + '/templates'))
 
@@ -42,8 +49,9 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = ''           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
+DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+#DATABASE_NAME = PROJECT_ROOT + '/puppet_django.db'
+DATABASE_NAME = '/opt/puppet/puppet_django.db'
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
@@ -100,9 +108,12 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'puppet.urls'
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'puppet.memcache_status',
     'puppet.reports',
+    'puppet.monitor',
 )
