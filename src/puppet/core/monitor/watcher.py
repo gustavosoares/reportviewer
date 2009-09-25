@@ -6,6 +6,8 @@ import logging
 import re
 
 #INITIAL SETUP
+#cache timeout to store email body to prevent from sending the same email twice
+CACHE_TIMEOUT = 86400
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = "%s/../.." % PROJECT_ROOT
 
@@ -120,7 +122,7 @@ for host in hosts:
 					email.content_subtype = "html"
 					email.send()
 					print 'Usuario notificado %s (%s)' % (user.username, user.email)
-					cache.set(key_cache, 'ok')
+					cache.set(key_cache, 'ok', CACHE_TIMEOUT)
 					email_body = ''
 	print '*' * 60
 
