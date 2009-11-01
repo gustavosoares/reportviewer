@@ -31,6 +31,11 @@
 		function hideLoading (){
 			Element.hide("loading");
 		}
+		
+		/*Atualiza o div passado como parametro*/
+		function update_div_get(div_name, url) {
+			new Ajax.Updater(div_name,url, {asynchronous:true, method : 'get', parameters:{}}); return false;
+		}
 	</script>
 </head>
 <body>

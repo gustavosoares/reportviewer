@@ -3,7 +3,7 @@ import os
 import yaml
 import hashlib
 import logging
-import simplejson as json
+
 #Parses puppets reports dir
 '''
 def parse_report(reportdir):
@@ -19,7 +19,7 @@ def parse_report(reportdir):
 #Parses a yaml file to a python dictionary
 def load_yaml(yamlfile):
 	yaml_dict = {}
-	test_file(yamlfile)
+	test_path(yamlfile)
 	file = open(yamlfile, 'r')
 	c = file.read()
 	#replaces some weirdness
@@ -32,9 +32,6 @@ def load_yaml(yamlfile):
 	yaml_dict = yaml.load(c)
 	
 	return yaml_dict
-
-def enconde_json(obj):
-	return json.dumps(obj)
 	
 def start_counter():
 	return time.time()
@@ -46,9 +43,10 @@ def elapsed(inicio):
 	logging.debug('duracao: %.2f min' % elapsed)
 	return elapsed
 
-def test_file(filename):
+def test_path(filename):
+	"""test if a path exist"""
 	if not os.path.exists(filename):
-		raise Exception, 'File %s does not exists' % filename
+		raise Exception, 'Path %s does not exists' % filename
 		
 def md5(raw_text):
 	return hashlib.md5(raw_text).hexdigest()
