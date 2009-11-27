@@ -1,0 +1,213 @@
+[
+  {
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "admin", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": true, 
+      "is_staff": true, 
+      "last_login": "2009-10-22 11:33:22", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$b11dc$088af750df31102ab7eba482075418bfcda3a445", 
+      "email": "gustavosoares@gmail.com", 
+      "date_joined": "2009-10-22 11:29:19"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "gustavo", 
+      "first_name": "Gustavo Soares", 
+      "last_name": "Souza", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": true, 
+      "last_login": "2009-11-10 10:09:56", 
+      "groups": [], 
+      "user_permissions": [
+        1, 
+        2, 
+        3, 
+        13, 
+        4, 
+        10, 
+        14, 
+        5, 
+        11, 
+        15, 
+        6, 
+        12, 
+        25, 
+        31, 
+        28, 
+        26, 
+        32, 
+        29, 
+        27, 
+        33, 
+        30
+      ], 
+      "password": "sha1$39f96$c4e94036cc508b29ee997dda13af3dd99765f7e9", 
+      "email": "gustavosouza@corp.globo.com", 
+      "date_joined": "2009-10-22 11:30:24"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "puppet", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": true, 
+      "last_login": "2009-11-10 10:10:35", 
+      "groups": [], 
+      "user_permissions": [
+        1, 
+        2, 
+        3, 
+        13, 
+        4, 
+        10, 
+        14, 
+        5, 
+        11, 
+        15, 
+        6, 
+        12, 
+        16, 
+        17, 
+        18, 
+        25, 
+        31, 
+        28, 
+        26, 
+        32, 
+        29, 
+        27, 
+        33, 
+        30
+      ], 
+      "password": "sha1$7ab7e$1f930d071f5e9143b69999266aea8fecdbc23371", 
+      "email": "", 
+      "date_joined": "2009-11-10 10:10:35"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riovld46", 
+      "description": "puppet client - lab vegetais"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riovld48", 
+      "description": "puppet master - dev"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riovld50", 
+      "description": "puppet client - lab deploy"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riolb315", 
+      "description": "servidor de deploy"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riolb316", 
+      "description": "servidor de deploy"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riolb348", 
+      "description": "puppet master prod"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riolb349", 
+      "description": "puppet master prod"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riold133", 
+      "description": "puppet master homolog"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riold134", 
+      "description": "puppet master homolog"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "monitor.resourcemonitor", 
+    "fields": {
+      "pattern": "/etc/profile"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "monitor.resourcemonitor", 
+    "fields": {
+      "pattern": "/etc/init.d/httpd-globoesporte-be-ctl"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "monitor.monitor", 
+    "fields": {
+      "host_monitors": [
+        1, 
+        2, 
+        3, 
+        4, 
+        5, 
+        6, 
+        7, 
+        8, 
+        9
+      ], 
+      "log_level": "", 
+      "user": 2, 
+      "last_run": null, 
+      "resource_monitors": [
+        1, 
+        2
+      ]
+    }
+  }
+]

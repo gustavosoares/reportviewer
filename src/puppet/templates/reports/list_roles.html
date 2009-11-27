@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Puppet reports{% endblock %}
+
+{% block stylesheet %}
+
+{% endblock %}
+	<link rel="stylesheet" type="text/css" href="/media/css/jit.css" />
+{% block javascript %}
+
+<!--[if IE]>
+<script type="text/javascript" src="/media/js/excanvas.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="/media/js/jit.js" ></script>
+
+<script type="text/javascript">
+
+	//var json = {{json|safe}};
+    //funcoes para vistualizaco movidas para arquivo list_roles.js
+
+</script>
+
+
+{% endblock %}
+
+{% block content %}
+<h1><a href="/reports/">Inicio</a></h1>
+<table border="1">
+	<tr>
+		<td>
+			<center>
+				<table>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan=2><b><font size=+1>Roles</font></b></td>
+				</tr>
+				<tr>
+					<td><b>Role</b></td>
+					<td colspan=6><b><a href="#" onclick="update_div_get('divAjax','/reports/hosts/');">Host</b></a></td>
+					<td><b>Actions</b></td>
+				</tr>
+				{% for role,attr in roles.items %}
+					<tr class="{% cycle 'row1' 'row2' %}">
+						<td><a href="#" onclick="update_div_get('divAjax','/reports/viewrole/{{ role }}');">{{ role }}</a></td>
+						<td colspan=6></td>
+						<td colspan=6></td>
+					</tr>
+					{% for host in attr.hosts %}
+						<tr class="{% cycle 'row1' 'row2' %}">
+							<td></td>
+							<td colspan=6>&nbsp;&nbsp;<a href="#" onclick="update_div_get('divAjax','/reports/viewlog/{{ host }}/');">{{ host }}</a></td>
+							<td>
+								<center>
+				                	<a href="#" onclick="update_div_get('divAjax','/reports/facts/{{ host }}');">facts</a>
+				                	<a href="#" onclick="update_div_get('divAjax','/reports/viewlog/{{ host }}');">log</a>
+									<a href="#" onclick="update_div_get('divAjax','/reports/graph/{{ host }}');">graph</a>
+
+				        		</center>
+							</td>
+						</tr>
+					{% endfor %}
+				{% endfor %}
+				</table>
+			</center>
+		</td>
+		<td>
+			<div id="divAjax"></div>
+		</td>
+	</tr>
+</table>
+
+<div id="infovis"></div>
+
+{% endblock %}
