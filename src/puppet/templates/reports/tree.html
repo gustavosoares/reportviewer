@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Dependencias{% endblock %}
+
+{% block stylesheet %}
+
+<style type="text/css">
+
+#conteudo-visao-hierarquica {
+	margin: 0px auto;
+	padding: 1px;
+	/*position: relative;*/
+	width:100%;
+	border: 1px solid;
+	background: Beige;
+	font-family: verdana, arial, sans-serif;
+	font-size: 10px;
+	text-align: center;
+}
+
+#infovis {
+    position:relative;
+    width:1024px;
+    height:768px;
+    margin:auto;
+    overflow:hidden;
+    background: black;
+}
+
+#infovis-detalhe {
+	margin: 0px auto;
+	padding: 1px;
+	/*position: relative;*/
+	width:99%;
+	border: 1px solid;
+	background: Beige;
+	font-family: verdana, arial, sans-serif;
+	font-size: 10px;
+	text-align: center;
+}
+
+#log {
+    position:absolute;
+    top:10px;
+    font-size:1.0em;
+    font-weight:bold;
+    color:#23A4FF;
+}
+
+</style>
+
+{% endblock %}
+	
+{% block javascript %}
+
+<script src="/media/js/jit.js" type="text/javascript"></script>
+<script src="/media/js/hiperbolica.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+{% if arvore_json %}
+	var json = {{ arvore_json|safe }}
+{% endif %}	
+
+   Event.observe(window, 'load', init, false);
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+<center>
+<div id="conteudo-visao-hierarquica">
+	<div id='infovis'></div>
+	<div id='infovis-detalhe'></div>
+	<div id="log">log</div>
+</div>
+</center>
+{% endblock %}
+

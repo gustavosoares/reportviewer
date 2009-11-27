@@ -8,15 +8,57 @@ from django.conf import settings
 from django.shortcuts import render_to_response
 from django.core.cache import cache
 
-from core import util
-from core.puppet.puppethost import puppetHost
-from core.puppet.role import role
-from core.repository import NodeRepository
+from puppet.core import util
+from puppet.reports.core.domain.puppethost import puppetHost
+from puppet.reports.core.domain.role import role
+from puppet.reports.core.repository import NodeRepository
 
 import os
 
-def list_hosts(request):
+NodeRepository.NODES_FILES = settings.NODES_FILES
 
+def index(request):
+	return list_roles(request)
+
+def list_roles(request):
+	"""retorna lista de roles"""
+	logging.debug('listing roles...')
+	roles = NodeRepository.find_roles()
+	logging.debug('done listing roles')
+	logging.info(roles)
+	return render_to_response('reports/list_roles.html', 
+			{ 'roles' : roles })
+
+def view_tree(request):
+	"""retorna a arvore hiperbolica com as dependencias"""
+	#print 'common: %s' % NodeRepository.get_includes('common')
+	#print 'puppet::comon: %s' % NodeRepository.get_includes('puppet::common')
+	#print 'nodes.pp: %s' % NodeRepository.get_includes('nodes.pp')
+	
+	deps, tree = NodeRepository.map_dependencies()
+	#print deps
+	#for dep in deps:
+		#print dep
+		
+	return render_to_response('reports/tree.html', 
+		{ 'arvore_json' : tree })
+	
+def viewrole(request, name=''):
+
+	inicio = util.start_counter()
+	logging.info('getting information for role %s' % name)
+	r = role(name)
+	logging.debug('variaveis(%s): %s' % (r.total_variables(),r.variables))
+	logging.debug('includes(%s): %s' % (r.total_includes(),r.includes))
+
+	gen_time = '%.2f' % util.elapsed(inicio)
+
+	return render_to_response('reports/viewrole.html', 
+		{ 'role' : r,
+		'gen_time' : gen_time})
+
+def list_hosts(request):
+	"""list informations for hosts in the report dir"""
 	logging.debug('listing reports in %s for hosts' % settings.REPORTDIR)
 	
 	hosts_dir = os.listdir(settings.REPORTDIR)
@@ -28,42 +70,28 @@ def list_hosts(request):
 
 	logging.debug('done listing reports for hosts')
 	
-	return render_to_response('list_hosts.html', { 'hosts' : hosts })
-
-def list_roles(request):
-
-	logging.debug('listing roles in %s' % settings.NODES_FILE)
-	
-	role_to_host = NodeRepository.find_roles()
-	#json_obj = NodeRepository.find_roles_json()
-	#json_obj = util.enconde_json(role_to_host)
-	#logging.debug('json object: %s' % json_obj)
-	logging.debug('done listing roles')
-	
-	return render_to_response('list_roles.html', 
-			{ 'roles' : role_to_host })
+	return render_to_response('reports/list_hosts.html', { 'hosts' : hosts })
 	
 def facts(request, hostname=''):
 	yamlfile = settings.YAMLDIR + "/facts/" + hostname + ".yaml"
 	facts = util.load_yaml(yamlfile)
-	return render_to_response('facts.html', 
+	return render_to_response('reports/facts.html', 
 				{ 'hostname' : hostname, 'facts' : facts })
 
 def graph(request, hostname=''):
-	return render_to_response('graph.html', 
+	return render_to_response('reports/graph.html', 
 				{ 'hostname' : hostname, 'rrd_dir' : settings.RRDDIR })
 
 def viewlog(request, hostname='', yamlfile=None):
-	
+	"""view log information for host in the specified yamlfile"""
 	if yamlfile != None:
-
 		logging.info('getting yamlfile %s for host %s' % (yamlfile, hostname))
 		p = puppetHost(hostname, settings.REPORTDIR)
 		yaml = p.get_yaml(yamlfile)
 		logs = yaml['logs']
 		logcount = len(logs)
 		r = p.get_report(yamlfile)
-		return render_to_response('viewlog.html',
+		return render_to_response('reports/viewlog.html',
 			{ 'yamlfile' : yamlfile,
 			  'logcount' : logcount,
 			  'logs' : logs,
@@ -80,23 +108,9 @@ def viewlog(request, hostname='', yamlfile=None):
 		reports = p.get_reportlist()
 		gen_time = '%.2f' % util.elapsed(inicio)
 
-		return render_to_response('viewhosts.html', 
+		return render_to_response('reports/viewhosts.html', 
 			{ 'hostname' : hostname,
 			'rrdroot' : settings.RRDROOT,
 			'gen_time' : gen_time,
 			'reports' : reports })
 
-def viewrole(request, name=''):
-
-	inicio = util.start_counter()
-	logging.info('getting role %s' % name)
-	r = role(name)
-	logging.debug('variaveis(%s): %s' % (r.total_variables(),r.variables))
-	logging.debug('includes(%s): %s' % (r.total_includes(),r.includes))
-
-	gen_time = '%.2f' % util.elapsed(inicio)
-
-	return render_to_response('viewrole.html', 
-		{ 'role' : r,
-		'roles_file' : settings.ROLES_FILE,
-		'gen_time' : gen_time})

@@ -15,19 +15,28 @@ logging.basicConfig(
 
 
 # where your reports are stored, same as reportdir in puppet.conf
-REPORTDIR = "/opt/puppet/reports"
+REPORTDIR = "/mnt/puppet/reports"
 
 # where your rrd files are stored, same as rrddir in puppet.conf
-RRDDIR = "/opt/puppet/rrd"
+RRDDIR = "/mnt/puppet/rrd"
 
 # where to find the rrd's on the web, can be full url or relative
 RRDROOT = "/rrd"
 
 # where the puppetmaster yaml directory is
-YAMLDIR = "/opt/puppet/yaml"
+YAMLDIR = "/mnt/puppet/yaml"
 
-NODES_FILE = "/etc/puppet/manifests/nodes.pp"
-ROLES_FILE = "/etc/puppet/manifests/classes/roles.pp"
+#NODES_FILE = "/etc/puppet/manifests/nodes.pp"
+
+NODES_FILES = (
+    '/mnt/puppet/conf/manifests/nodes.pp',
+    '/mnt/puppet/conf/manifests/nodes_lab.pp',
+    '/mnt/puppet/conf/manifests/nodes_homolog.pp',
+    '/mnt/puppet/conf/manifests/nodes_staging.pp',
+    '/mnt/puppet/conf/manifests/nodes_prod.pp',
+)
+
+ROLES_DIR = "/mnt/puppet/conf/manifests/classes/roles"
 
 #7 days cache
 CACHE_BACKEND = "memcached://localhost:11211/?timeout=604800"
