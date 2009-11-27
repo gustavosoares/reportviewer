@@ -157,7 +157,7 @@ def map_dependencies_from_start_point(start):
 				
 				h = tree_nodes.get(get_file_for_resource(first), None)
 				if h == None:
-					print 'criando no para %s' % get_file_for_resource(first)
+					logging.debug('criando no para %s' % get_file_for_resource(first))
 					h = NoHiperbolico()
 					h.id = counter
 					h.dim = 10
@@ -166,11 +166,11 @@ def map_dependencies_from_start_point(start):
 					print tree_nodes[get_file_for_resource(first)]
 					counter = counter + 1
 				else:
-					print '#### no encontrado para %s' % get_file_for_resource(first)
+					logging.debug('#### no encontrado para %s' % get_file_for_resource(first))
 
 				child = tree_nodes.get(get_file_for_resource(include), None)
 				if child == None:
-					print 'criando no para %s' % get_file_for_resource(include)
+					logging.debug('criando no para %s' % get_file_for_resource(include))
 					child = NoHiperbolico()
 					child.id = counter
 					child.dim = 10
@@ -194,30 +194,24 @@ def map_dependencies_from_start_point(start):
 	for father,childs in dependencies.items():
 		if len(childs) == 0:
 			stack_leafs.append(father)
-	
-	stack_leafs_initial = copy.deepcopy(stack_leafs)
-	node_visited = {}
-	#crio dicionario vazio com nos visitados partindo de um nó folha
-	for leaf in stack_leafs_initial:
-		node_visited[leaf] = []
 
-	print '*' * 50
-	print '\n### folhas: %s\n' % stack_leafs
-	print '*' * 100
+	logging.debug('*' * 50)
+	logging.debug('\n### folhas: %s\n' % stack_leafs)
+	logging.debug('*' * 100)
 
-	print '@' * 70
-	print 'start_point: %s' % start_point
-	print '@' * 70
+	logging.debug('@' * 70)
+	logging.debug('start_point: %s' % start_point)
+	logging.debug('@' * 70)
 	
 	######################
 	#acha o caminho das folhas para a raiz
 	for leaf in stack_leafs:
 		paths = search_graph(start_point, leaf, dependencies)
-		print '## caminho partindo de %s para %s' % (start_point, leaf)
+		logging.debug('## caminho partindo de %s para %s' % (start_point, leaf))
 		for path in paths:
-			print '\t %s' % path
-		print '\n'
-		print '## atualizando a arvore hiperbolica'
+			logging.debug('\t %s' % path)
+		logging.debug('\n')
+		logging.debug('## atualizando a arvore hiperbolica')
 		for path in paths:
 			count = len(path)
 			last_index = count - 1
@@ -225,41 +219,12 @@ def map_dependencies_from_start_point(start):
 				previous = last_index - 1
 				tree_nodes[path[previous]].add_children(tree_nodes[path[last_index]])
 				last_index = last_index - 1
-		print '## done'
-		print '\n'
+		logging.debug('## done')
 	
 	#######################
-	
-	#get_deps(start_point, dependencies[start_point], dependencies, tree_nodes)
-	
 	raiz.add_children(tree_nodes[start_point])
 
 	return dependencies, raiz
-
-def get_deps(father_key, deps, dependencies, tree_nodes):
-	"""
-		tree_nodes: dicionario com a chave o nome do arquivo e o valor um objeto da classe NoHiperbolico
-		
-		dependencies: dicionario com as dependencias. 
-		Ex.:
-		manifests/nodes_lab.pp -> ['manifests/classes/roles/puppet_master.pp', 'manifests/classes/roles/globoesporte_admin.pp', 'manifests/classes/roles/deploy_server.pp']
-		modules/user/manifests/classes/deploy.pp -> []
-		modules/portal/manifests/classes/filer.pp -> []
-		manifests/classes/roles/puppet_master.pp -> ['modules/puppet/manifests/classes/master.pp', 'modules/httpd_be/manifests/classes/puppet_master.pp', 'modules/memcache/manifests/classes/puppet.pp']
-	"""
-	father = tree_nodes[father_key]
-	for dep in deps:
-		child = tree_nodes[dep]
-		if dependencies.has_key(dep):
-			deps_aux = dependencies[dep]
-			if child or child != 'ERROR':
-				father.add_children(child)
-				tree_nodes[father_key] = father
-				#print '\n%s ->>>> %s' % (father_key, dep)
-				#print '&' * 70
-				#print tree_nodes[father_key]
-				#print '&' * 70
-				get_deps(dep, deps_aux, dependencies, tree_nodes)
 
 def map_dependencies():
 	
