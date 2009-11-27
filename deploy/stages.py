@@ -4,9 +4,9 @@ import setup
 setup._config()
 
 ## STAGES ##
-def dev():
-	'''### Seta configuracoes de dev'''
-	env.stage = 'dev'
+def lab():
+	'''### Seta configuracoes de lab'''
+	env.stage = 'lab'
 	env.roledefs = {
     	'web': ['riovld48.globoi.com'],
     	'filer': ['riovld48.globoi.com']

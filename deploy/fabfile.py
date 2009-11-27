@@ -60,13 +60,33 @@ def deploy():
 def releases():
 	'''#### Lista os releases disponiveis no servidor'''
 	run("ls -lad %s/current | awk -F 'releases/' '{print $2}' > /tmp/release.current; for x in `ls -r %s/releases`; do if [ \"$x\" == \"`cat /tmp/release.current`\" ]; then echo \"$x <- current\"; else echo $x; fi; done; rm /tmp/release.current" % (env.filer_dir, env.filer_dir))
-	
+
+@roles('web')
+def syncbd():
+	'''### Sincroniza o banco de dados'''
+	print run("cd /opt/puppet/django/puppet; python2.5 manage.py loaddata monitor/fixtures/initial_data.json")
+
+@roles('web')
+def reset_bd():
+	'''### Reseta o banco de dados'''
+	apps = ['monitor', 'reports']
+	for app in apps:
+		cmd = "cd /opt/puppet/django/puppet; python2.5 manage.py sqlclear %s | python2.5 manage.py dbshell" % app
+		print run(cmd)
+	print run("cd /opt/puppet/django/puppet; python2.5 manage.py syncdb")
+	print 'dando graceful no httpd'
+	services.graceful_httpd()
+
 def help():
 	'''##### Ajuda do fabric'''
 	print ''
 	print '#' * 60
 	print ''
 	print '#### Deploy para o backend'
-	print '\tfab dev deploy'
+	print '\tfab lab deploy'
 	print '#### Setup no backend'
-	print '\tfab dev setup'	
+	print '\tfab lab setup'
+	print '#### Sync do banco de dados'
+	print '\tfab lab syncbd'
+	print '#### Reset do banco de dados'
+	print '\tfab lab reset_bd'
