@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^/?$', views.index),
     (r'^tree/?$', views.view_tree),
+    (r'^deps/?$', views.view_tree),
     (r'^hosts/?$', views.list_hosts),
     (r'^roles/?$', views.list_roles),    
     (r'^facts/(?P<hostname>[^/]+)$', views.facts),

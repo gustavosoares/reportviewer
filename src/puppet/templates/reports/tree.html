@@ -11,7 +11,7 @@
 	padding: 1px;
 	/*position: relative;*/
 	width:100%;
-	border: 1px solid;
+	border: 0px solid;
 	background: Beige;
 	font-family: verdana, arial, sans-serif;
 	font-size: 10px;
@@ -19,7 +19,8 @@
 }
 
 #infovis {
-    position:relative;
+    position: relative;
+    float: right;
     width:1024px;
     height:768px;
     margin:auto;
@@ -30,22 +31,26 @@
 #infovis-detalhe {
 	margin: 0px auto;
 	padding: 1px;
-	/*position: relative;*/
-	width:99%;
+	float: left;
+	position: relative;
+	width:252px;
 	border: 1px solid;
-	background: Beige;
+	background: 	#B8B8B8 ;
 	font-family: verdana, arial, sans-serif;
 	font-size: 10px;
 	text-align: center;
 }
 
+
 #log {
     position:absolute;
-    top:10px;
-    font-size:1.0em;
+    top:30;
+    right: 0;
+    font-size:1.1em;
     font-weight:bold;
     color:#23A4FF;
 }
+
 
 </style>
 
@@ -69,9 +74,10 @@
 
 {% block content %}
 <center>
+<div id="id_voltar"><a href="/reports/"><h2>Voltar</h2></a></div>
 <div id="conteudo-visao-hierarquica">
-	<div id='infovis'></div>
 	<div id='infovis-detalhe'></div>
+	<div id='infovis'></div>
 	<div id="log">log</div>
 </div>
 </center>

@@ -26,8 +26,7 @@ def list_roles(request):
 	roles = NodeRepository.find_roles()
 	logging.debug('done listing roles')
 	logging.info(roles)
-	return render_to_response('reports/list_roles.html', 
-			{ 'roles' : roles })
+	return render_to_response('reports/list_roles.html', { 'roles' : roles })
 
 def view_tree(request):
 	"""retorna a arvore hiperbolica com as dependencias"""
@@ -35,13 +34,12 @@ def view_tree(request):
 	#print 'puppet::comon: %s' % NodeRepository.get_includes('puppet::common')
 	#print 'nodes.pp: %s' % NodeRepository.get_includes('nodes.pp')
 	
-	deps, tree = NodeRepository.map_dependencies()
-	#print deps
-	#for dep in deps:
-		#print dep
+	deps, json = NodeRepository.map_dependencies()
+	
+	#return HttpResponse('teste')
 		
 	return render_to_response('reports/tree.html', 
-		{ 'arvore_json' : tree })
+		{ 'arvore_json' : json })
 	
 def viewrole(request, name=''):
 

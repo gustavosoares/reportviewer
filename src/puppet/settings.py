@@ -6,7 +6,7 @@ import os
 LOG_FILENAME = '/tmp/django-puppet.log'
 
 logging.basicConfig(
-    level = logging.DEBUG,
+    level = logging.INFO,
     format = '%(asctime)s %(levelname)s %(message)s',
     filename = LOG_FILENAME,
     filemode = 'a'
@@ -37,6 +37,7 @@ NODES_FILES = (
 )
 
 ROLES_DIR = "/mnt/puppet/conf/manifests/classes/roles"
+PUPPET_FILENAME_PREFIX = "/mnt/puppet/conf"
 
 #7 days cache
 CACHE_BACKEND = "memcached://localhost:11211/?timeout=604800"

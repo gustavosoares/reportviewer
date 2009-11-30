@@ -1,7 +1,7 @@
 from fabric.api import *
 from fabric import state
 from stages import *
-#from services import *
+from services import *
 from setup import *
 import services
 #import setup
@@ -90,3 +90,5 @@ def help():
 	print '\tfab lab syncbd'
 	print '#### Reset do banco de dados'
 	print '\tfab lab reset_bd'
+	print '#### Restart do puppet master'
+	print '\tfab lab restart_puppetmaster'

@@ -16,7 +16,6 @@ function addEvent(obj, type, fn) {
 
 function init(){
 
-
     var infovis = document.getElementById('infovis');
     var w = infovis.offsetWidth - 50, h = infovis.offsetHeight - 50;
     
@@ -38,6 +37,7 @@ function init(){
             dim: 9,
             color: "#f00",
             overridable: true,
+            transform: false,
         },
         
         Edge: {
@@ -56,6 +56,12 @@ function init(){
             addEvent(domElement, 'click', function () {
                 ht.onClick(node.id);
             });
+            addEvent(domElement, 'mouseover', function () {
+                Log.write(node.name)
+            });
+            addEvent(domElement, 'mouseout', function () {
+                Log.write("")
+            });
         },
         //Change node styles when labels are placed
         //or moved.
@@ -64,16 +70,16 @@ function init(){
             style.display = '';
             style.cursor = 'pointer';
             if (node._depth <= 1) {
-                style.fontSize = "0.9em";
+                style.fontSize = "1.1em";
                 style.color = "#ddd";
 
             } else if(node._depth == 2){
-                style.fontSize = "0.8em";
+                style.fontSize = "1.0em";
                 style.color = "#ddd";
 
-            } else {
+            } /*else {
                 style.display = 'none';
-            }
+            }*/
 
             var left = parseInt(style.left);
             var w = domElement.offsetWidth;

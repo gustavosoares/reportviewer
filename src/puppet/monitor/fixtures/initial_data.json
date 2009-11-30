@@ -100,6 +100,24 @@
       "date_joined": "2009-11-10 10:10:35"
     }
   }, 
+    {
+    "pk": 4, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "leandro", 
+      "first_name": "Leandro", 
+      "last_name": "Souza", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2009-11-27 19:24:48", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$49f66$3f904f29c5f5e1ac1ada20c71016bb837c716c52", 
+      "email": "leandro.souza@corp.globo.com", 
+      "date_joined": "2009-11-27 19:24:48"
+    }
+  },
   {
     "pk": 1, 
     "model": "monitor.hostmonitor", 
@@ -172,6 +190,30 @@
       "description": "puppet master homolog"
     }
   }, 
+    {
+    "pk": 10, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riold122", 
+      "description": "dev do sce"
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riovlb22", 
+      "description": "sce"
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "monitor.hostmonitor", 
+    "fields": {
+      "hostname": "riovlb23", 
+      "description": "sce"
+    }
+  },
   {
     "pk": 1, 
     "model": "monitor.resourcemonitor", 
@@ -207,6 +249,23 @@
       "resource_monitors": [
         1, 
         2
+      ]
+    }
+  },
+  {
+    "pk": 2, 
+    "model": "monitor.monitor", 
+    "fields": {
+      "host_monitors": [
+        10, 
+        11, 
+        12
+      ], 
+      "log_level": "", 
+      "user": 4, 
+      "last_run": null, 
+      "resource_monitors": [
+        1
       ]
     }
   }

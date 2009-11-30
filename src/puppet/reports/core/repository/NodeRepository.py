@@ -5,6 +5,7 @@ from puppet.reports.core.domain.nohiperbolico import NoHiperbolico
 
 import os
 import sys
+import traceback
 import re
 import logging
 import copy
@@ -86,13 +87,16 @@ def get_file_for_resource(resource):
 	
 def get_includes(include_name):
 	"""returns list of includes"""
-	filename_prefix = '/mnt/puppet/conf'
-	filename = filename_prefix + '/' + get_file_for_resource(include_name)
+	filename_prefix = settings.PUPPET_FILENAME_PREFIX
+	resource_name = get_file_for_resource(include_name)
+	filename = filename_prefix + '/' + resource_name
 	
 	logging.debug('filename: %s'% filename)	
+	logging.debug('include_name: %s'% include_name)	
+	logging.debug('resource name: %s'% resource_name)	
 	
 	if not os.path.exists(filename):
-		logging.warn('file %s not found on the system' % filename)
+		raise Exception('file %s not found on the system' % filename)
 		return None
 	else:
 		includes = []
@@ -102,11 +106,23 @@ def get_includes(include_name):
 				l = line.split()
 				if l[1] not in includes:
 					includes.append(l[1])
-			elif line.startswith('import'):
+			elif line.startswith('import'): #deals with imports on the file
 				l = line.split()
 				import_ = l[1]
 				import_ = import_[1:len(import_)-1]
-				#print g[1:len(g)-1]
+				'''
+				era pra tratar import com * mas foi comentado
+				if import_.endswith('classes/*'): #import clause has *, this means that we have to collect all files... OMG!
+					print 'aaaachou: %s' % import_
+					import_dir = import_.replace('classes/*', 'manifests/classes/')
+					print import_dir
+					total_files = os.listdir(filename_prefix + '/modules/' + import_dir)
+					print 'total_files: %s' % total_files
+					for fi in total_files:
+						z = 'modules/' + import_dir + fi
+						print z
+						includes.append(z)
+				else:'''
 				if import_ not in includes:
 					includes.append(import_)
 		return includes
@@ -160,7 +176,7 @@ def map_dependencies_from_start_point(start):
 					logging.debug('criando no para %s' % get_file_for_resource(first))
 					h = NoHiperbolico()
 					h.id = counter
-					h.dim = 10
+					h.dim = 8
 					h.name = get_file_for_resource(first)
 					tree_nodes[get_file_for_resource(first)] = h
 					print tree_nodes[get_file_for_resource(first)]
@@ -173,7 +189,7 @@ def map_dependencies_from_start_point(start):
 					logging.debug('criando no para %s' % get_file_for_resource(include))
 					child = NoHiperbolico()
 					child.id = counter
-					child.dim = 10
+					child.dim = 7
 					child.name = get_file_for_resource(include)
 					tree_nodes[get_file_for_resource(include)] = child
 					counter = counter + 1
@@ -182,9 +198,15 @@ def map_dependencies_from_start_point(start):
 			dependencies[get_file_for_resource(first)] = includes_aux
 			stack_closed.append(first)
 		else:
+			logging.error('erro ao pegar as dependencias de %s' % first)
 			dependencies[get_file_for_resource(first)] = 'ERROR'
 		counter = counter + 1
 	
+	logging.debug('*' * 50)
+	logging.debug('dependencies')
+	for father,childs in dependencies.items():
+		logging.debug('%s -> %s' % (father, childs))
+	logging.debug('*' * 50)
 	start_point = get_file_for_resource(start)
 	
 	#######################
@@ -193,6 +215,10 @@ def map_dependencies_from_start_point(start):
 	stack_leafs = []
 	for father,childs in dependencies.items():
 		if len(childs) == 0:
+			no_folha = tree_nodes[father]
+			#no_folha.type = 'triangle'
+			no_folha.color = '#009900'
+			tree_nodes[father] = no_folha
 			stack_leafs.append(father)
 
 	logging.debug('*' * 50)
@@ -205,6 +231,7 @@ def map_dependencies_from_start_point(start):
 	
 	######################
 	#acha o caminho das folhas para a raiz
+
 	for leaf in stack_leafs:
 		paths = search_graph(start_point, leaf, dependencies)
 		logging.debug('## caminho partindo de %s para %s' % (start_point, leaf))
@@ -220,7 +247,7 @@ def map_dependencies_from_start_point(start):
 				tree_nodes[path[previous]].add_children(tree_nodes[path[last_index]])
 				last_index = last_index - 1
 		logging.debug('## done')
-	
+
 	#######################
 	raiz.add_children(tree_nodes[start_point])
 
@@ -240,12 +267,13 @@ def search_graph(start, goal, graph):
 
 def generate(path, goal, solns, graph):
 	state = path[-1]
-	#print 'path: %s' % path
+	logging.debug('path: %s' % path)
 	if state == goal:
 		solns.append(path)
 	else:
 		for arc in graph[state]:
 			if arc not in path:
+				logging.debug('arc: %s' % arc)
 				generate(path + [arc], goal, solns, graph )
 
 
